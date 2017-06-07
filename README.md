@@ -31,7 +31,9 @@ Remove the database volume mounted at `server/db/`
 
 ## To run the server locally
 `export DATABASE_URL=postgres:///$(whoami)`
+
 `export FLASK_APP=run.py`
+
 `flask run`
 
 ## To push to Heroku
