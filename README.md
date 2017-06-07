@@ -37,4 +37,4 @@ Remove the database volume mounted at `server/db/`
 ## To push to Heroku
 Add Heroku remote `heroku git:remote -a herokuprojectname`
 
-Go to project root and run `git subtree push --prefix server heroku master`
+Navigate to project root and run `git subtree push --prefix server heroku master`
