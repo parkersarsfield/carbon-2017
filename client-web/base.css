@@ -1,0 +1,57 @@
+.gesture-sequence {
+  text-align: center;
+}
+
+.gesture {
+  width: 120px;
+  margin: 15px;
+  background-color: #666666;
+  border-radius: 100%;
+}
+
+.order-form {
+  background-color: #e8f0ff;
+  border-radius: 12px;
+  width: 100%;
+}
+
+.order-form-sub{
+  margin: 20px auto;
+  padding: 20px;
+  display: flex;
+  max-width: 300px;
+}
+
+.form-control {
+  margin: 0 0 12px 0;
+}
+
+.card-number {
+  width: 60px;
+}
+
+.wait {
+  color: goldenrod;
+}
+
+.pass {
+  color: green;
+}
+
+.fail {
+  color: red;
+}
+
+.loading-area {
+  margin: 20px 0 0 0;
+}
+
+.container {
+  width: 800px;
+}
+
+.buy-button {
+  height:40px;
+  margin: auto 10px auto 20px;
+  border-radius: 2px;
+}
