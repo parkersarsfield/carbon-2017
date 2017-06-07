@@ -11,6 +11,6 @@ class Transaction(BaseModel):
     gesture_one = CharField()
     gesture_two = CharField()
     gesture_three = CharField()
-    is_completed = BooleanField(default=False)
+    is_complete = BooleanField(default=False)
     timestamp = DateTimeField(default=datetime.datetime.now)
-    transaction_id = CharField(primary_key=True, unique=True)
+    transaction_id = IntegerField(primary_key=True, unique=True)
