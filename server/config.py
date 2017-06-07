@@ -1,6 +1,11 @@
 import os
+import urlparse
 
-db_name = 'postgres'
-db_host = os.environ['DATABASE_URL']
-db_user = 'postgres'
+urlparse.uses_netloc.append("postgres")
+url = urlparse.urlparse(os.environ["DATABASE_URL"])
+
+db_name = url.path[1:]
+db_host = url.hostname
+db_user = url.username
+
 docker_db_name = 'transactiondb'
