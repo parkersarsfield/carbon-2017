@@ -15,7 +15,6 @@ def authenticate():
     gesture_one = None
     gesture_two = None
     gesture_three = None
-    transaction = None
 
     query = Transaction.delete()
     query.execute()
