@@ -10,6 +10,7 @@ export default class App extends Component {
 
     this.state = {
       code: null,
+      completed: 0,
       status: 'WAIT',
       isBuying: false,
     }
@@ -33,7 +34,7 @@ export default class App extends Component {
           });
         }
       });
-    }, 1000);
+    }, 500);
   }
 
   onBuy(event) {
@@ -52,6 +53,7 @@ export default class App extends Component {
       console.log(json);
       self.setState({
         code: [json.gesture_one, json.gesture_two, json.gesture_three],
+        completed: json.number_complete,
         status: 'WAIT',
         isBuying: false,
       });
@@ -71,7 +73,7 @@ export default class App extends Component {
         <div className="order-container">
           <CardInput onBuy={this.onBuy.bind(this)} isBuying={this.state.isBuying}/>
         </div>
-        <Authentication code={this.state.code} status={this.state.status}/>
+        <Authentication code={this.state.code} status={this.state.status} completed={this.state.completed}/>
       </div>
     );
   }

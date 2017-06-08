@@ -10,7 +10,7 @@ export default class Authentication extends Component {
     return code ? 
     (
         <div className="gesture-sequence">
-          <AuthSequence code={this.props.code} />
+          <AuthSequence code={this.props.code} status={this.props.status} completed={this.props.completed}/>
           <AuthLoaded status={this.props.status} />
           <AuthMessage status={this.props.status} />
         </div>
