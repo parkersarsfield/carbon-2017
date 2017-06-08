@@ -5,7 +5,7 @@ export default class Header extends Component {
     return (
       <div className="header">
         <h1>MYO AUTHENTICATION</h1>
-        <img src="/images/caplogo.png" className="logo"/>
+        <img src="/images/caplogo.png" className="logo" alt="CAPITAL_ONE"/>
       </div>
     );
   }
