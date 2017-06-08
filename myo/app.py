@@ -5,24 +5,21 @@ import requests
 
 api_url = 'https://warm-spire-75113.herokuapp.com/api/validate'
 
-gestures = []
-gestures_map = {libmyo.Pose.wave_in:'LEFT', libmyo.Pose.wave_out:'RIGHT', libmyo.Pose.fist:'FIST', libmyo.Pose.fingers_spread:'OPEN'}
+current_gesture = 0
+gesture = None
+gestures_map = {libmyo.Pose.fist:'FIST', libmyo.Pose.wave_in:'LEFT', libmyo.Pose.fingers_spread:'OPEN', libmyo.Pose.wave_out:'RIGHT'}
 
-def check_gestures():
-    if len(gestures) >= 3:
-        popped = []
+def check_gesture():
+    # only check 1 gesture at a time
 
-        # send gestures to server
-        for i in range(0,3):
-            popped.append(gestures.pop(0))
+    data = {'current_gesture':current_gesture, 'gesture':gesture, 'transaction_id':0}
+    payload = json.dumps(data)
+    r = requests.put(api_url, data=payload)
+    content = r.content
+    content_json = json.loads(content)
+    result = content_json['result']
 
-        payload = {'gesture_one':popped[0], 'gesture_two':popped[1], 'gesture_three':popped[2], 'transaction_id':0}
-        r = requests.put(api_url, data=payload)
-        content = r.content
-        content_json = json.loads(content)
-        result = content_json['result']
-
-        print(result)
+    print(result)
 
 class Listener(libmyo.DeviceListener):
     def on_pair(self, myo, timestamp, firmware_version):
@@ -33,11 +30,12 @@ class Listener(libmyo.DeviceListener):
 
     def on_pose(self, myo, timestamp, pose):
         if not (pose == libmyo.Pose.rest) and not (pose == libmyo.Pose.double_tap):
-            gestures.append(gestures_map[pose])
+            gesture = gestures_map[pose]
+            current_gesture = current_gesture + 1
 
             myo.vibrate('short')
 
-            check_gestures()
+            check_gesture()
 
 hub = libmyo.Hub()
 hub.run(1000, Listener())
