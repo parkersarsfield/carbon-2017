@@ -36,10 +36,10 @@ def check_gesture():
 class Listener(libmyo.DeviceListener):
 
     def on_pair(self, myo, timestamp, firmware_version):
-        print("Hello, Myo!")
+        print('Hello, Myo!')
 
     def on_unpair(self, myo, timestamp):
-        print("Goodbye, Myo!")
+        print('Goodbye, Myo!')
 
     def on_pose(self, myo, timestamp, pose):
         global current_gesture
@@ -56,15 +56,15 @@ class Listener(libmyo.DeviceListener):
                     current_gesture = current_gesture + 1
                     fails = []
             elif len(fails) == 2:
-                # TODO tell parker's website when we hard failed
-                print('YOU FAILED')
+                print('fail')
                 sys.exit()
             else:
                 current_gesture = current_gesture + 1
 
             if current_gesture > 3:
-                print('success') 
-                # TODO print success RIGHT after last gesture instead of after extra gesture
+                print('success')
+                # TODO print success RIGHT after last gesture instead of after
+                # extra gesture
                 sys.exit()
 
             myo.vibrate('short')
