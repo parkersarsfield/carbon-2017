@@ -100,12 +100,6 @@ def check():
     time_now = datetime.now()
     transaction = None
 
-    # number complete, status
-        # pass
-        # fail:soft
-        # fail:hard
-        # wait
-
     transaction_id = request.args.get('transaction_id')
     transaction_id = int(transaction_id)
 
