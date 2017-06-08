@@ -1,13 +1,10 @@
 from time import sleep
 import json
 import myo as libmyo
-libmyo.init()
 import requests
 import sys
 
 api_url = 'https://warm-spire-75113.herokuapp.com/api/validate'
-
-# TODO when successfully incremented, return a wait to check api
 
 current_gesture = 0
 fails = []
@@ -15,6 +12,7 @@ gesture = None
 gestures_map = {libmyo.Pose.fist: 'FIST', libmyo.Pose.wave_in: 'LEFT',
                 libmyo.Pose.fingers_spread: 'OPEN', libmyo.Pose.wave_out: 'RIGHT'}
 
+libmyo.init()
 
 def check_gesture():
     print('current_gesture:', current_gesture)
@@ -56,7 +54,7 @@ class Listener(libmyo.DeviceListener):
                     current_gesture = current_gesture + 1
                     fails = []
             elif len(fails) == 2:
-                print('fail')
+                print('failure')
                 sys.exit()
             else:
                 current_gesture = current_gesture + 1
@@ -73,6 +71,7 @@ class Listener(libmyo.DeviceListener):
 
 hub = libmyo.Hub()
 hub.run(1000, Listener())
+
 try:
     while True:
         sleep(0.5)

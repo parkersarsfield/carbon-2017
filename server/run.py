@@ -55,6 +55,7 @@ def validate():
             result = True
             transaction.gesture_one_status = 1
         elif transaction.gesture_one_status == 2:
+            result = False
             transaction.gesture_one_status = 3;
         else:
             result = False
@@ -64,6 +65,7 @@ def validate():
             result = True
             transaction.gesture_two_status = 1
         elif transaction.gesture_two_status == 2:
+            result = False
             transaction.gesture_two_status = 3;
         else:
             result = False
@@ -74,6 +76,7 @@ def validate():
             transaction.gesture_three_status = 1
             transaction.is_complete = True
         elif transaction.gesture_three_status == 2:
+            result = False
             transaction.gesture_three_status = 3;
         else:
             result = False
