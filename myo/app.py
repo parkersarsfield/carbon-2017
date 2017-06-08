@@ -14,6 +14,7 @@ gestures_map = {libmyo.Pose.fist: 'FIST', libmyo.Pose.wave_in: 'LEFT',
 
 libmyo.init()
 
+
 def check_gesture():
     print('current_gesture:', current_gesture)
 
@@ -29,6 +30,13 @@ def check_gesture():
 
     if not result:
         fails.append(True)
+
+        if len(fails) == 2:
+            print('failure')
+            sys.exit()
+    elif current_gesture == 3:
+        print('success')
+        sys.exit()
 
 
 class Listener(libmyo.DeviceListener):
@@ -53,17 +61,8 @@ class Listener(libmyo.DeviceListener):
                 elif fails[0] == False:
                     current_gesture = current_gesture + 1
                     fails = []
-            elif len(fails) == 2:
-                print('failure')
-                sys.exit()
             else:
                 current_gesture = current_gesture + 1
-
-            if current_gesture > 3:
-                print('success')
-                # TODO print success RIGHT after last gesture instead of after
-                # extra gesture
-                sys.exit()
 
             myo.vibrate('short')
 
