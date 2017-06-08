@@ -52,11 +52,11 @@ def validate():
 
     if current_gesture == 1:
         if transaction.gesture_one == gesture:
-            print('passed db:', transaction.gesture_one, 'myo:', gesture)
             result = True
             transaction.gesture_one_status = 1
+        elif transaction.gesture_one_status == 2:
+            transaction.gesture_one_status = 3;
         else:
-            print('failed db:', transaction.gesture_one, 'myo:', gesture)
             result = False
             transaction.gesture_one_status = 2
     elif current_gesture == 2:
@@ -83,6 +83,7 @@ def validate():
 
 @app.route('/api/check', methods=['GET'])
 def check():
+    fail_hard = False
     fail_soft = False
     json = None
     number_complete = 0
@@ -109,16 +110,25 @@ def check():
         number_complete = 1
     elif transaction.gesture_one_status == 2:
         fail_soft = True
+    elif transaction.gesture_one_status == 3:
+        fail_hard = True
+
     if (transaction.gesture_two_status == 1) and (not fail_soft):
         number_complete = 2
     elif transaction.gesture_two_status == 2:
         fail_soft = True
+
     if (transaction.gesture_three_status == 1) and (not fail_soft):
         number_complete = 3
     elif transaction.gesture_three_status == 2:
         fail_soft = True
 
-    if fail_soft:
+    if fail_hard:
+        json = jsonify(
+            number_complete=number_complete,
+            status='FAIL:HARD'
+        )
+    elif fail_soft:
         json = jsonify(
             number_complete=number_complete,
             status='FAIL:SOFT'
