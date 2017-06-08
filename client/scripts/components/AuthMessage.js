@@ -9,8 +9,10 @@ export default class Authentication extends Component {
       message = 'Please perform the above gestures...';
     } else if (this.props.status === 'PASS') {
       message = 'Your order has been successfully placed!'
-    } else if (this.props.status === 'FAIL') {
-      message = 'Authentication failed. Try your order again.';
+    } else if (this.props.status === 'FAIL:HARD') {
+      message = 'Gesture authentication failed.';
+    } else if (this.props.status === 'FAIL:SOFT') {
+      message = 'Last gesture incorrect, try it again.'
     }
 
     return <p className="alert">{message}</p>;

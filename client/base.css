@@ -137,3 +137,19 @@ label {
 .buy-icon {
   margin: 0 10px 0 0;
 }
+
+.completed {
+  border: 4px green solid;
+}
+
+.failed {
+  border: 4px red solid;
+}
+
+.future {
+  opacity: .1;
+}
+
+.retry {
+  border: 4px orange solid;
+}
