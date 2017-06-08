@@ -9,18 +9,31 @@ export default class App extends Component {
     super(props);
 
     this.state = {
-      code: ['left', 'fist', 'open'],
-      status: 'wait',
+      code: null,
+      status: 'WAIT',
       isBuying: false,
     }
   }
 
-  checkForValidation(id, count, countLimit) {
-    fetch('http://172.20.10.3:5000/api/check/' + id).then(function(response) {
-      console.log(response);
-      if(count < countLimit)
-        setTimeout(checkForValidation, 500, id, count++, count); 
-    });
+  checkForValidation(id) {
+    let self = this;
+
+    setTimeout(function(){
+      fetch('http://warm-spire-75113.herokuapp.com/api/check?transaction_id=' + id)
+      .then(function(response){
+        return response.json();
+      })
+      .then(function(json) {
+        if (json.status === 'WAIT') {
+          self.checkForValidation(id);
+        } else {
+          console.log('other stuff here');
+          self.setState({
+            status: json.status,
+          });
+        }
+      });
+    }, 1000);
   }
 
   onBuy(event) {
@@ -29,13 +42,24 @@ export default class App extends Component {
     this.setState({
       isBuying: true,
     });
+
     let self = this;
+
     fetch('http://warm-spire-75113.herokuapp.com/api/authenticate')
     .then(function(response) {
-      console.log(response);
-      this.setState({ isBuying: false });
-      checkForValidation(response.id);
-    }).catch(function(err){
+      return response.json();
+    }).then(function(json) {
+      console.log(json);
+      self.setState({
+        code: [json.gesture_one, json.gesture_two, json.gesture_three],
+        status: 'WAIT',
+        isBuying: false,
+      });
+
+      self.checkForValidation(json.transaction_id, 0)
+    })
+    .catch(function(err){
+      console.log(err);
       self.setState({ isBuying: false });
     });
   }

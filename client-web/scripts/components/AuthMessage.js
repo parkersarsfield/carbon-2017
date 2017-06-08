@@ -5,11 +5,11 @@ export default class Authentication extends Component {
   render() {
     let message;
 
-    if (this.props.status === 'wait') {
+    if (this.props.status === 'WAIT') {
       message = 'Please perform the above gestures...';
-    } else if (this.props.status === 'pass') {
+    } else if (this.props.status === 'PASS') {
       message = 'Your order has been successfully placed!'
-    } else if (this.props.status === 'fail') {
+    } else if (this.props.status === 'FAIL') {
       message = 'Authentication failed. Try your order again.';
     }
 

@@ -73,3 +73,12 @@ h1 {
 span {
   margin: 0 20%;
 }
+
+.logo {
+  margin: 20px;
+  width: 100px;
+}
+
+.header {
+  text-align: center;
+}
