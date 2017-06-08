@@ -37,7 +37,7 @@ export default class App extends Component {
           }
         }
       });
-    }, 500);
+    }, 100);
   }
 
   onBuy(event) {
