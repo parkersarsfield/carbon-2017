@@ -23,12 +23,11 @@ def authenticate():
     gesture_two = secure_random.choice(gestures)
     gesture_three = secure_random.choice(gestures)
 
-    # create transaction id
     # TODO correctly increment transaction_id
     transaction_id = 0
     transaction = Transaction.create(gesture_one=gesture_one, gesture_two=gesture_two, gesture_three=gesture_three, transaction_id=transaction_id)
 
-    # TODO: send transaction id to armband and tell armband to start listening
+    # TODO send transaction id to armband and tell armband to start listening
 
     return jsonify(
         gesture_one=gesture_one,
@@ -64,8 +63,8 @@ def validate():
 
 @app.route('/api/check', methods=['GET'])
 def check():
-    #time_limit = 60
-    time_limit = 5
+    #seconds_limit = 60
+    seconds_limit = 5
     time_now = datetime.now()
 
     transaction_id = request.args.get('transaction_id')
@@ -79,7 +78,7 @@ def check():
         return jsonify(
             status='PASS'
         )
-    elif (time_now - transaction.timestamp) <= timedelta(seconds=time_limit):
+    elif (time_now - transaction.timestamp) <= timedelta(seconds=seconds_limit):
          return jsonify(
              status='WAIT'
          )
