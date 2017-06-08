@@ -13,7 +13,7 @@ def authenticate():
     gesture_one = None
     gesture_two = None
     gesture_three = None
-    gestures = ['left', 'right', 'fist', 'open']
+    gestures = ['LEFT', 'RIGHT', 'FIST', 'OPEN']
 
     # TODO do not truncate all transactions in the beginning
     query = Transaction.delete()
@@ -47,16 +47,11 @@ def validate():
     json = request.get_json(force=True)
 
     gesture_one = json['gesture_one']
-    print('1', gesture_one)
     gesture_two = json['gesture_two']
-    print('2', gesture_two)
     gesture_three = json['gesture_three']
-    print('3', gesture_three)
     transaction_id = json['transaction_id']
 
     transaction = Transaction.get(Transaction.transaction_id == transaction_id)
-
-    print('t1', transaction.gesture_one, 't2', transaction.gesture_two, 't3', transaction.gesture_three)
 
     if (transaction.gesture_one == gesture_one and transaction.gesture_two == gesture_two and transaction.gesture_three == gesture_three):
         result = True
