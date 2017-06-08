@@ -54,7 +54,7 @@ class Listener(libmyo.DeviceListener):
                     current_gesture = current_gesture + 1
                     fails = []
             elif len(fails) == 2:
-                print('fail')
+                print('failure')
                 sys.exit()
             else:
                 current_gesture = current_gesture + 1
