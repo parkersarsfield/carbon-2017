@@ -1,18 +1,26 @@
 from time import sleep
 import json
-import myo as libmyo; libmyo.init()
+import myo as libmyo
+libmyo.init()
 import requests
+import sys
 
 api_url = 'https://warm-spire-75113.herokuapp.com/api/validate'
 
+# TODO when successfully incremented, return a wait to check api
+
 current_gesture = 0
+fails = []
 gesture = None
-gestures_map = {libmyo.Pose.fist:'FIST', libmyo.Pose.wave_in:'LEFT', libmyo.Pose.fingers_spread:'OPEN', libmyo.Pose.wave_out:'RIGHT'}
+gestures_map = {libmyo.Pose.fist: 'FIST', libmyo.Pose.wave_in: 'LEFT',
+                libmyo.Pose.fingers_spread: 'OPEN', libmyo.Pose.wave_out: 'RIGHT'}
+
 
 def check_gesture():
     print('current_gesture:', current_gesture)
 
-    data = {'current_gesture':current_gesture, 'gesture':gesture, 'transaction_id':0}
+    data = {'current_gesture': current_gesture,
+            'gesture': gesture, 'transaction_id': 0}
     payload = json.dumps(data)
     r = requests.put(api_url, data=payload)
     content = r.content
@@ -21,23 +29,43 @@ def check_gesture():
 
     print(result)
 
+    if not result:
+        fails.append(True)
+
+
 class Listener(libmyo.DeviceListener):
+
     def on_pair(self, myo, timestamp, firmware_version):
-        print("Hello, Myo!")
+        print('Hello, Myo!')
 
     def on_unpair(self, myo, timestamp):
-        print("Goodbye, Myo!")
+        print('Goodbye, Myo!')
 
     def on_pose(self, myo, timestamp, pose):
         global current_gesture
+        global fails
         global gesture
 
-        if not (pose == libmyo.Pose.rest) and not (pose == libmyo.Pose.double_tap):
-            if current_gesture >= 3:
-                current_gesture = 0
-
+        if not (pose == libmyo.Pose.double_tap) and not (pose == libmyo.Pose.rest):
             gesture = gestures_map[pose]
-            current_gesture = current_gesture + 1
+
+            if len(fails) == 1:
+                if fails[0] == True:
+                    fails[0] = False
+                elif fails[0] == False:
+                    current_gesture = current_gesture + 1
+                    fails = []
+            elif len(fails) == 2:
+                print('fail')
+                sys.exit()
+            else:
+                current_gesture = current_gesture + 1
+
+            if current_gesture > 3:
+                print('success')
+                # TODO print success RIGHT after last gesture instead of after
+                # extra gesture
+                sys.exit()
 
             myo.vibrate('short')
 
