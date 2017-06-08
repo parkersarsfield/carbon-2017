@@ -10,10 +10,11 @@ CORS(app)
 
 @app.route('/api/authenticate', methods=['GET'])
 def authenticate():
+    GESTURES = ['FIST', 'LEFT', 'OPEN', 'RIGHT']
+
     gesture_one = None
     gesture_two = None
     gesture_three = None
-    gestures = ['FIST', 'LEFT', 'OPEN', 'RIGHT']
     transaction = None
 
     query = Transaction.delete()
@@ -22,9 +23,9 @@ def authenticate():
     secure_random = random.SystemRandom()
 
     while (gesture_one == gesture_two or gesture_two == gesture_three):
-        gesture_one = secure_random.choice(gestures)
-        gesture_two = secure_random.choice(gestures)
-        gesture_three = secure_random.choice(gestures)
+        gesture_one = secure_random.choice(GESTURES)
+        gesture_two = secure_random.choice(GESTURES)
+        gesture_three = secure_random.choice(GESTURES)
 
     transaction_id = 0
     transaction = Transaction.create(gesture_one=gesture_one, gesture_two=gesture_two, gesture_three=gesture_three, transaction_id=transaction_id)
@@ -90,12 +91,13 @@ def validate():
 
 @app.route('/api/check', methods=['GET'])
 def check():
+    SECONDS_LIMIT = 60
+    #SECONDS_LIMIT = 5
+
     fail_hard = False
     fail_soft = False
     json = None
     number_complete = 0
-    seconds_limit = 60
-    #seconds_limit = 5
     time_now = datetime.now()
     transaction = None
 
@@ -151,7 +153,7 @@ def check():
             number_complete=3,
             status='PASS'
         )
-    elif (time_now - transaction.timestamp) <= timedelta(seconds=seconds_limit):
+    elif (time_now - transaction.timestamp) <= timedelta(seconds=SECONDS_LIMIT):
          json = jsonify(
              number_complete=number_complete,
              status='WAIT'

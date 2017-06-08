@@ -4,13 +4,13 @@ import myo as libmyo
 import requests
 import sys
 
-api_url = 'https://warm-spire-75113.herokuapp.com/api/validate'
+API_URL = 'https://warm-spire-75113.herokuapp.com/api/validate'
+GESTURES_MAP = {libmyo.Pose.fist: 'FIST', libmyo.Pose.wave_in: 'LEFT',
+                libmyo.Pose.fingers_spread: 'OPEN', libmyo.Pose.wave_out: 'RIGHT'}
 
 current_gesture = 0
 fails = []
 gesture = None
-gestures_map = {libmyo.Pose.fist: 'FIST', libmyo.Pose.wave_in: 'LEFT',
-                libmyo.Pose.fingers_spread: 'OPEN', libmyo.Pose.wave_out: 'RIGHT'}
 
 libmyo.init()
 
@@ -21,7 +21,7 @@ def check_gesture():
     data = {'current_gesture': current_gesture,
             'gesture': gesture, 'transaction_id': 0}
     payload = json.dumps(data)
-    r = requests.put(api_url, data=payload)
+    r = requests.put(API_URL, data=payload)
     content = r.content
     content_json = json.loads(content)
     result = content_json['result']
@@ -53,7 +53,7 @@ class Listener(libmyo.DeviceListener):
         global gesture
 
         if not (pose == libmyo.Pose.double_tap) and not (pose == libmyo.Pose.rest):
-            gesture = gestures_map[pose]
+            gesture = GESTURES_MAP[pose]
 
             if len(fails) == 1:
                 if fails[0] == True:
