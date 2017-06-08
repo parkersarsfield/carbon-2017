@@ -56,6 +56,8 @@ def validate():
 
     transaction = Transaction.get(Transaction.transaction_id == transaction_id)
 
+    print('t1', transaction.gesture_one, 't2', transaction.gesture_two, 't3', transaction.gesture_three)
+
     if (transaction.gesture_one == gesture_one and transaction.gesture_two == gesture_two and transaction.gesture_three == gesture_three):
         result = True
     else:
