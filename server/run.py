@@ -37,23 +37,41 @@ def authenticate():
 
 @app.route('/api/validate', methods=['PUT'])
 def validate():
+    # only validate one at a time 
+
     result = None
 
     json = request.get_json(force=True)
 
-    gesture_one = json['gesture_one']
-    gesture_two = json['gesture_two']
-    gesture_three = json['gesture_three']
+    current_gesture = json['current_gesture']
+    gesture = json['gesture']
     transaction_id = json['transaction_id']
 
     transaction = Transaction.get(Transaction.transaction_id == transaction_id)
 
-    if (transaction.gesture_one == gesture_one and transaction.gesture_two == gesture_two and transaction.gesture_three == gesture_three):
-        result = True
-    else:
-        result = False
+    if current_gesture == 1:
+        if transaction.gesture_one == gesture:
+            result = True
+            transaction.gesture_one_status = 1
+        else:
+            result = False
+            transaction.gesture_one_status = 2
+    elif current_gesture == 2:
+        if transaction.gesture_two == gesture:
+            result = True
+            transaction.gesture_two_status = 1
+        else:
+            result = False
+            transaction.gesture_two_status = 2
+    elif current_gesture == 3:
+        if transaction.gesture_three == gesture:
+            result = True
+            transaction.gesture_three_status = 1
+            transaction.is_complete = True
+        else:
+            result = False
+            transaction.gesture_three_status = 2
 
-    transaction.is_complete = result
     transaction.save()
 
     return jsonify(
@@ -62,10 +80,19 @@ def validate():
 
 @app.route('/api/check', methods=['GET'])
 def check():
+    fail_soft = False
     json = None
+    number_complete = 0
     seconds_limit = 60
     #seconds_limit = 5
     time_now = datetime.now()
+    transaction = None
+
+    # number complete, status
+        # pass
+        # fail:soft
+        # fail:hard
+        # wait
 
     transaction_id = request.args.get('transaction_id')
     transaction_id = int(transaction_id)
@@ -75,21 +102,41 @@ def check():
     except Transaction.DoesNotExist:
         return ('', 404)
 
-    if (transaction.is_complete):
+    if transaction.gesture_one_status == 1:
+        number_complete = 1
+    elif transaction.gesture_one_status == 2:
+        fail_soft = True
+    if (transaction.gesture_two_status == 1) and (not fail_soft):
+        number_complete = 2
+    elif transaction.gesture_two_status == 2:
+        fail_soft = True
+    if (transaction.gesture_three_status == 1) and (not fail_soft):
+        number_complete = 3
+    elif transaction.gesture_three_status == 2:
+        fail_soft = True
+
+    if fail_soft:
+        json = jsonify(
+            number_complete=number_complete,
+            status='FAIL:SOFT'
+        )
+    elif (transaction.is_complete):
         transaction.delete_instance()
 
         json = jsonify(
+            number_complete=3,
             status='PASS'
         )
     elif (time_now - transaction.timestamp) <= timedelta(seconds=seconds_limit):
          json = jsonify(
+             number_complete=number_complete,
              status='WAIT'
          )
     else:
         transaction.delete_instance()
 
         json = jsonify(
-             status='FAIL'
+             status='FAIL:HARD'
          )
 
     return json
