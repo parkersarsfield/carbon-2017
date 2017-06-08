@@ -63,6 +63,8 @@ def validate():
         if transaction.gesture_two == gesture:
             result = True
             transaction.gesture_two_status = 1
+        elif transaction.gesture_two_status == 2:
+            transaction.gesture_two_status = 3;
         else:
             result = False
             transaction.gesture_two_status = 2
@@ -71,6 +73,8 @@ def validate():
             result = True
             transaction.gesture_three_status = 1
             transaction.is_complete = True
+        elif transaction.gesture_three_status == 2:
+            transaction.gesture_three_status = 3;
         else:
             result = False
             transaction.gesture_three_status = 2
@@ -117,11 +121,15 @@ def check():
         number_complete = 2
     elif transaction.gesture_two_status == 2:
         fail_soft = True
+    elif transaction.gesture_two_status == 3:
+        fail_hard = True
 
     if (transaction.gesture_three_status == 1) and (not fail_soft):
         number_complete = 3
     elif transaction.gesture_three_status == 2:
         fail_soft = True
+    elif transaction.gesture_three_status == 3:
+        fail_hard = True
 
     if fail_hard:
         json = jsonify(
