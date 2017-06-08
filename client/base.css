@@ -3,14 +3,18 @@
 }
 
 .gesture {
-  width: 120px;
+  width: 172px;
   margin: 15px;
   background-color: #666666;
   border-radius: 100%;
 }
 
+.gestures {
+  display: inline-flex;
+}
+
 .order-form {
-  background-color: #a3bad2;
+  background-color: #888888;
   border-radius: 12px;
   width: 100%;
   box-shadow: 0 4px 20px #888888;
@@ -54,31 +58,56 @@
 
 .buy-button {
   height:40px;
-  margin: auto 10px auto 20px;
+  margin: 0 0 0 auto;
   border-radius: 2px;
   background-color: #305078;
   border-radius: 2px;
-  box-shadow: 0 4px 20px #888888;
 
 }
 
 body {
-  background-color: #dbe4ed;
+  background-color: #222222;
 }
 
 h1 {
   text-align: center;
+  font-weight: normal;
+  letter-spacing: 4px;
+  color: white;
+  font-size: 36px;
 }
 
 span {
-  margin: 0 20%;
+  margin: 0;
+  display: flex;
+  width: 100%;
 }
 
 .logo {
   margin: 20px;
-  width: 100px;
+  width: 200px;
 }
 
 .header {
   text-align: center;
+  color: #305078;
+}
+
+.form-control {
+  margin: 0 4px;
+}
+
+#cardNumber {
+  width: 216px;
+}
+
+.alert {
+  color: lightgray;
+}
+
+.gesture-label {
+  color: lightgray;
+  font-weight: bold;
+  font-size: 20px;
+  letter-spacing: 4px;
 }
