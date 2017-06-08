@@ -13,13 +13,11 @@ def authenticate():
     gesture_one = None
     gesture_two = None
     gesture_three = None
-    gestures = ['LEFT', 'RIGHT', 'FIST', 'OPEN']
+    gestures = ['FIST', 'LEFT', 'OPEN', 'RIGHT']
 
-    # TODO do not truncate all transactions in the beginning
     query = Transaction.delete()
     query.execute()
 
-    # create a random group of 3 gestures
     secure_random = random.SystemRandom()
 
     while (gesture_one == gesture_two or gesture_two == gesture_three):
@@ -27,11 +25,8 @@ def authenticate():
         gesture_two = secure_random.choice(gestures)
         gesture_three = secure_random.choice(gestures)
 
-    # TODO correctly increment transaction_id
     transaction_id = 0
     transaction = Transaction.create(gesture_one=gesture_one, gesture_two=gesture_two, gesture_three=gesture_three, transaction_id=transaction_id)
-
-    # TODO send transaction id to armband and tell armband to start listening
 
     return jsonify(
         gesture_one=gesture_one,
