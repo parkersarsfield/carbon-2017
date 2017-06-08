@@ -1,4 +1,4 @@
-from models import Transaction
+from models import db, Transaction
 from datetime import datetime, timedelta
 from flask import Flask, jsonify, request
 from flask_cors import CORS, cross_origin
@@ -14,6 +14,7 @@ def authenticate():
     gesture_two = None
     gesture_three = None
     gestures = ['FIST', 'LEFT', 'OPEN', 'RIGHT']
+    transaction = None
 
     query = Transaction.delete()
     query.execute()
@@ -51,9 +52,11 @@ def validate():
 
     if current_gesture == 1:
         if transaction.gesture_one == gesture:
+            print('passed db:', transaction.gesture_one, 'myo:', gesture)
             result = True
             transaction.gesture_one_status = 1
         else:
+            print('failed db:', transaction.gesture_one, 'myo:', gesture)
             result = False
             transaction.gesture_one_status = 2
     elif current_gesture == 2:

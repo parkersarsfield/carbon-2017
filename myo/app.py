@@ -10,7 +10,7 @@ gesture = None
 gestures_map = {libmyo.Pose.fist:'FIST', libmyo.Pose.wave_in:'LEFT', libmyo.Pose.fingers_spread:'OPEN', libmyo.Pose.wave_out:'RIGHT'}
 
 def check_gesture():
-    # only check 1 gesture at a time
+    print('current_gesture:', current_gesture)
 
     data = {'current_gesture':current_gesture, 'gesture':gesture, 'transaction_id':0}
     payload = json.dumps(data)
@@ -29,7 +29,13 @@ class Listener(libmyo.DeviceListener):
         print("Goodbye, Myo!")
 
     def on_pose(self, myo, timestamp, pose):
+        global current_gesture
+        global gesture
+
         if not (pose == libmyo.Pose.rest) and not (pose == libmyo.Pose.double_tap):
+            if current_gesture >= 3:
+                current_gesture = 0
+
             gesture = gestures_map[pose]
             current_gesture = current_gesture + 1
 
