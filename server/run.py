@@ -13,7 +13,7 @@ def authenticate():
     gesture_one = None
     gesture_two = None
     gesture_three = None
-    gestures = ['left', 'right', 'fist', 'open']
+    gestures = ['LEFT', 'RIGHT', 'FIST', 'OPEN']
 
     # TODO do not truncate all transactions in the beginning
     query = Transaction.delete()
@@ -68,8 +68,8 @@ def validate():
 @app.route('/api/check', methods=['GET'])
 def check():
     json = None
-    #seconds_limit = 60
-    seconds_limit = 5
+    seconds_limit = 60
+    #seconds_limit = 5
     time_now = datetime.now()
 
     transaction_id = request.args.get('transaction_id')
