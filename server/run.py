@@ -63,6 +63,7 @@ def validate():
 
 @app.route('/api/check', methods=['GET'])
 def check():
+    json = None
     #seconds_limit = 60
     seconds_limit = 5
     time_now = datetime.now()
@@ -70,21 +71,26 @@ def check():
     transaction_id = request.args.get('transaction_id')
     transaction_id = int(transaction_id)
 
-    transaction = Transaction.get(Transaction.transaction_id == transaction_id)
+    try:
+        transaction = Transaction.get(Transaction.transaction_id == transaction_id)
+    except Transaction.DoesNotExist:
+        return ('', 404)
 
     if (transaction.is_complete):
         transaction.delete_instance()
 
-        return jsonify(
+        json = jsonify(
             status='PASS'
         )
     elif (time_now - transaction.timestamp) <= timedelta(seconds=seconds_limit):
-         return jsonify(
+         json = jsonify(
              status='WAIT'
          )
     else:
         transaction.delete_instance()
 
-        return jsonify(
+        json = jsonify(
              status='FAIL'
          )
+
+    return json
