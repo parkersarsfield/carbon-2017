@@ -68,8 +68,8 @@ def validate():
 @app.route('/api/check', methods=['GET'])
 def check():
     json = None
-    #seconds_limit = 60
-    seconds_limit = 5
+    seconds_limit = 60
+    #seconds_limit = 5
     time_now = datetime.now()
 
     transaction_id = request.args.get('transaction_id')
