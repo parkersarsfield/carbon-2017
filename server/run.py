@@ -40,7 +40,7 @@ def authenticate():
 def validate():
     # only validate one at a time 
 
-    result = None
+    result = False
 
     json = request.get_json(force=True)
 
