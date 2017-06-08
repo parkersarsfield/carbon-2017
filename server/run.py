@@ -51,6 +51,7 @@ def validate():
 
     if current_gesture == 1:
         if transaction.gesture_one == gesture:
+            print('db:', transaction.gesture_one, 'myo:', gesture)
             result = True
             transaction.gesture_one_status = 1
         else:
