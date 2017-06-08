@@ -1,4 +1,0 @@
-#Wed Jun 07 10:59:58 EDT 2017
-base.0=/Users/kas/Google_Drive/cloud_storage/projects/carbon-2017/client/MyApplication/app/build/intermediates/transforms/dex/debug/folders/1000/5/slice_5
-renamed.0=classes.dex
-file.0=/Users/kas/Google_Drive/cloud_storage/projects/carbon-2017/client/MyApplication/app/build/intermediates/transforms/dex/debug/folders/1000/5/slice_5/classes.dex

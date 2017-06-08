@@ -1,7 +1,0 @@
-#Wed Jun 07 10:59:58 EDT 2017
-base.0=/Users/kas/Google_Drive/cloud_storage/projects/carbon-2017/client/MyApplication/app/build/intermediates/transforms/dex/debug/folders/1000/10000/instant-run-bootstrap_84c1748cc30c00c292b6982e06fc1f8ec3c4119b
-renamed.1=classes.dex
-renamed.0=classes2.dex
-file.1=/Users/kas/Google_Drive/cloud_storage/projects/carbon-2017/client/MyApplication/app/build/intermediates/transforms/dex/debug/folders/1000/10000/instant-run_47cffe847b0626895c234c54c5e9df7684f02055/classes.dex
-base.1=/Users/kas/Google_Drive/cloud_storage/projects/carbon-2017/client/MyApplication/app/build/intermediates/transforms/dex/debug/folders/1000/10000/instant-run_47cffe847b0626895c234c54c5e9df7684f02055
-file.0=/Users/kas/Google_Drive/cloud_storage/projects/carbon-2017/client/MyApplication/app/build/intermediates/transforms/dex/debug/folders/1000/10000/instant-run-bootstrap_84c1748cc30c00c292b6982e06fc1f8ec3c4119b/classes.dex
