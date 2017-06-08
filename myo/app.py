@@ -1,8 +1,6 @@
 from time import sleep
 from myo import init, Hub, DeviceListener
 
-# run export DYLD_LIBRARY_PATH=/Users/kas/Downloads/sdk/myo.framework
-
 class Listener(DeviceListener):
     def on_pair(self, myo, timestamp, firmware_version):
         print("Hello, Myo!")
