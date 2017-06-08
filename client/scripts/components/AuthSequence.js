@@ -12,7 +12,7 @@ export default class Authentication extends Component {
           if (this.props.status === 'WAIT') {
             cls = this.props.completed === index ? 'gesture' : 'gesture completed';
             cls = this.props.completed < index ? 'gesture future' : cls;
-          } else if (this.props.status === 'FAIL:RETRY'){
+          } else if (this.props.status === 'FAIL:SOFT'){
             cls = this.props.completed === index ? 'gesture retry' : 'gesture completed';
             cls = this.props.completed < index ? 'gesture future' : cls;
           } else if (this.props.status === 'FAIL:HARD') {

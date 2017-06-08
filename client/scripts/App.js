@@ -25,13 +25,16 @@ export default class App extends Component {
         return response.json();
       })
       .then(function(json) {
-        if (json.status === 'WAIT') {
+        if (json.status === 'WAIT' && json.number_complete === self.state.completed) {
           self.checkForValidation(id);
         } else {
-          console.log('other stuff here');
           self.setState({
             status: json.status,
+            completed: json.number_complete,
           });
+          if (json.status === 'WAIT' || json.status === 'FAIL:SOFT'){
+            self.checkForValidation(id);
+          }
         }
       });
     }, 500);
@@ -50,10 +53,9 @@ export default class App extends Component {
     .then(function(response) {
       return response.json();
     }).then(function(json) {
-      console.log(json);
       self.setState({
         code: [json.gesture_one, json.gesture_two, json.gesture_three],
-        completed: json.number_complete,
+        completed: 0,
         status: 'WAIT',
         isBuying: false,
       });
