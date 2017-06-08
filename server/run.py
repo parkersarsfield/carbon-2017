@@ -10,6 +10,9 @@ CORS(app)
 
 @app.route('/api/authenticate', methods=['GET'])
 def authenticate():
+    gesture_one = None
+    gesture_two = None
+    gesture_three = None
     gestures = ['left', 'right', 'fist', 'open']
 
     # TODO do not truncate all transactions in the beginning
@@ -19,9 +22,10 @@ def authenticate():
     # create a random group of 3 gestures
     secure_random = random.SystemRandom()
 
-    gesture_one = secure_random.choice(gestures)
-    gesture_two = secure_random.choice(gestures)
-    gesture_three = secure_random.choice(gestures)
+    while (gesture_one == gesture_two or gesture_two == gesture_three):
+        gesture_one = secure_random.choice(gestures)
+        gesture_two = secure_random.choice(gestures)
+        gesture_three = secure_random.choice(gestures)
 
     # TODO correctly increment transaction_id
     transaction_id = 0
