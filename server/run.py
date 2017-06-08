@@ -1,4 +1,4 @@
-from models import Transaction
+from models import db, Transaction
 from datetime import datetime, timedelta
 from flask import Flask, jsonify, request
 from flask_cors import CORS, cross_origin
@@ -14,6 +14,7 @@ def authenticate():
     gesture_two = None
     gesture_three = None
     gestures = ['FIST', 'LEFT', 'OPEN', 'RIGHT']
+    transaction = None
 
     query = Transaction.delete()
     query.execute()
@@ -26,7 +27,11 @@ def authenticate():
         gesture_three = secure_random.choice(gestures)
 
     transaction_id = 0
-    transaction = Transaction.create(gesture_one=gesture_one, gesture_two=gesture_two, gesture_three=gesture_three, transaction_id=transaction_id)
+    try:
+        transaction = Transaction.create(gesture_one=gesture_one, gesture_two=gesture_two, gesture_three=gesture_three, transaction_id=transaction_id)
+    except:
+        db.rollback()
+
 
     return jsonify(
         gesture_one=gesture_one,
