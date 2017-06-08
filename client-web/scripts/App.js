@@ -9,10 +9,18 @@ export default class App extends Component {
     super(props);
 
     this.state = {
-      code: null,
-      status: 'fail',
+      code: ['left', 'fist', 'open'],
+      status: 'wait',
       isBuying: false,
     }
+  }
+
+  checkForValidation(id, count, countLimit) {
+    fetch('http://172.20.10.3:5000/api/check/' + id).then(function(response) {
+      console.log(response);
+      if(count < countLimit)
+        setTimeout(checkForValidation, 500, id, count++, count); 
+    });
   }
 
   onBuy(event) {
@@ -21,35 +29,15 @@ export default class App extends Component {
     this.setState({
       isBuying: true,
     });
-
-    fetch('http://172.20.10.3:5000/api/authenticate').then(function(response) {
+    let self = this;
+    fetch('http://warm-spire-75113.herokuapp.com/api/authenticate')
+    .then(function(response) {
       console.log(response);
+      this.setState({ isBuying: false });
+      checkForValidation(response.id);
+    }).catch(function(err){
+      self.setState({ isBuying: false });
     });
-
-    
-    /*request({
-      url: '192.168.17.213:5000/api/authenticate',
-      method: 'GET',
-      data: {
-      }}, function(err, res, body) {
-        if (err) {
-          console.log(err);
-        } else {
-          console.log(res);
-          console.log(body);
-        }
-
-        this.setState({ isBuying: false });
-    });
-
-    setTimeout(() => {
-      this.setState({
-        code: ['left','fist', 'open'],
-        status: 'fail',
-        isBuying: false,
-      });
-    }, 1000);*/
-    
   }
 
   render() {

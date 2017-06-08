@@ -10,16 +10,18 @@
 }
 
 .order-form {
-  background-color: #e8f0ff;
+  background-color: #a3bad2;
   border-radius: 12px;
   width: 100%;
+  box-shadow: 0 4px 20px #888888;
+
 }
 
 .order-form-sub{
   margin: 20px auto;
   padding: 20px;
   display: flex;
-  max-width: 300px;
+  max-width: 100%;
 }
 
 .form-control {
@@ -31,15 +33,15 @@
 }
 
 .wait {
-  color: goldenrod;
+  color: #a3bad2;
 }
 
 .pass {
-  color: green;
+  color: 	green;
 }
 
 .fail {
-  color: red;
+  color: #db1321;
 }
 
 .loading-area {
@@ -54,4 +56,20 @@
   height:40px;
   margin: auto 10px auto 20px;
   border-radius: 2px;
+  background-color: #305078;
+  border-radius: 2px;
+  box-shadow: 0 4px 20px #888888;
+
+}
+
+body {
+  background-color: #dbe4ed;
+}
+
+h1 {
+  text-align: center;
+}
+
+span {
+  margin: 0 20%;
 }
