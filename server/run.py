@@ -27,11 +27,7 @@ def authenticate():
         gesture_three = secure_random.choice(gestures)
 
     transaction_id = 0
-    try:
-        transaction = Transaction.create(gesture_one=gesture_one, gesture_two=gesture_two, gesture_three=gesture_three, transaction_id=transaction_id)
-    except:
-        db.rollback()
-
+    transaction = Transaction.create(gesture_one=gesture_one, gesture_two=gesture_two, gesture_three=gesture_three, transaction_id=transaction_id)
 
     return jsonify(
         gesture_one=gesture_one,
