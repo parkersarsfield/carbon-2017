@@ -1,7 +1,6 @@
 from urllib.parse import urlparse
 import os
 
-#urlparse.uses_netloc.append('postgres')
 url = urlparse(os.environ['DATABASE_URL'])
 
 db_name = url.path[1:]
