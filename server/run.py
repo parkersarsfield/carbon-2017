@@ -47,8 +47,11 @@ def validate():
     json = request.get_json(force=True)
 
     gesture_one = json['gesture_one']
+    print('1', gesture_one)
     gesture_two = json['gesture_two']
+    print('2', gesture_two)
     gesture_three = json['gesture_three']
+    print('3', gesture_three)
     transaction_id = json['transaction_id']
 
     transaction = Transaction.get(Transaction.transaction_id == transaction_id)
