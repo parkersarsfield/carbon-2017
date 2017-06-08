@@ -14,7 +14,7 @@ export default class CardInput extends Component {
             <label htmlFor="CVC">Enter Security Code</label>
             <input type="text" className="form-control card-number" id="CVC" placeholder="123" />
           </span>
-          <button className="btn btn-success buy-button">
+          <button className="btn btn-primary buy-button">
           <i className={buttonLogo}> </i> Buy
         </button>
         </div>        
