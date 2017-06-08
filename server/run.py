@@ -44,7 +44,6 @@ def validate():
     json = request.get_json(force=True)
 
     current_gesture = json['current_gesture']
-    print(type(current_gesture))
     gesture = json['gesture']
     transaction_id = json['transaction_id']
 
@@ -52,10 +51,11 @@ def validate():
 
     if current_gesture == 1:
         if transaction.gesture_one == gesture:
-            print('db:', transaction.gesture_one, 'myo:', gesture)
+            print('passed db:', transaction.gesture_one, 'myo:', gesture)
             result = True
             transaction.gesture_one_status = 1
         else:
+            print('failed db:', transaction.gesture_one, 'myo:', gesture)
             result = False
             transaction.gesture_one_status = 2
     elif current_gesture == 2:
